@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Compress CSS</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="/submit.js"></script>
+</head>
+<body>
+<h1><a href="/">Compress CSS</a></h1>
+
+<form method="post" action="/compress">
+  <textarea id="css" name="css" spellcheck='false' placeholder="CSS code to compress"></textarea>
+  <input type="text" value="{{ css_file_name }}" id="filename" name="filename">
+  <input type="submit" value="Submit!" disabled>
+</form>
+
+<a id="css-link" href="compressed.css">Download compressed.css</a>
+<pre></pre>
+<p id="footer">This is my custom footer text. <a id="octocat" href="https://github.com/thomskaf/CompressCSS">GitHub</a></p>
+</body>
+</html>
