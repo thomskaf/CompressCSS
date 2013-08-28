@@ -1,0 +1,4 @@
+cron:
+- description: delete old compressed files
+  url: /delete-tmp-files
+  schedule: every 3 hours
