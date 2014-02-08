@@ -14,9 +14,9 @@ def compress_css(css):
     """Compress CSS code by removing comments, white-spaces, surplus
     characters and empty rules.
 
-    Will shorten hex colors where possible, condense margin and padding,
-    condense multidimensional zeros, condense floating points,
-    condense zero units, convert RGB colors to HEX and wrap CSS lines.
+    Will lower case all hex values and shorten them where possible,
+    condense margin and padding, multidimensional zeros, floating points
+    and zero units, convert RGB colors to HEX and wrap CSS lines.
 
     :param css: the Cascading Style Sheets code to compress.
     """
@@ -81,6 +81,9 @@ def compress_css(css):
     css = css.replace("background-position:0;", "background-position:0 0;",)
     # Remove unnecessary semicolons.
     css = re.sub(r";\}", "}", css)
+    # Lowercase all hexadecimals.
+    lowercase = lambda hex: "#%s" % hex.group(1).lower()
+    css = re.sub(r"#([A-Fa-f0-9]{3,6})", lowercase, css)
 
     return css
 
