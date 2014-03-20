@@ -23,10 +23,7 @@ def compress_css(css):
     def rgb_to_hex(rgb):
         "Converts RGB to HEX. `255, 255, 255` -> `#ffffff`"
         rgb = eval(rgb)
-        r = rgb[0]
-        g = rgb[1]
-        b = rgb[2]
-        return '#%02x%02x%02x' % (r, g, b)
+        return '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
 
     regex = re.compile(r"rgb\s*\(\s*([0-9,\s]+)\s*\)")
     match = regex.search(css)
@@ -72,6 +69,10 @@ def compress_css(css):
         r"[^\}\{]+\{\}": "",
         # Remove all CSS comment blocks.
         r"/\*[\s\S]*?\*/": "",
+        # Lowercase all hexadecimals.
+        r"#([A-Fa-f0-9]{3,6})": lambda hex: "#%s" % hex.group(1).lower(),
+        # Remove unnecessary semicolons.
+        r";\}": "}",
     }
 
     for pattern, replace in regexps.items():
@@ -79,11 +80,6 @@ def compress_css(css):
 
     # Revert `background-position:0;` to the valid `background-position:0 0;`.
     css = css.replace("background-position:0;", "background-position:0 0;",)
-    # Remove unnecessary semicolons.
-    css = re.sub(r";\}", "}", css)
-    # Lowercase all hexadecimals.
-    lowercase = lambda hex: "#%s" % hex.group(1).lower()
-    css = re.sub(r"#([A-Fa-f0-9]{3,6})", lowercase, css)
 
     return css
 
