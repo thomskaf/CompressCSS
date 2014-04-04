@@ -48,7 +48,7 @@ def compress_css(css):
         # and `(-webkit-min-device-pixel-ratio:0)`.
         r"\band\(": "and (",
         # Condense padding and margin.
-        r"(padding|margin): ?([^;]+?)(?:\s+\2)+;": r"\1:\2;",
+        r"(padding|margin)\s*?:\s*?([^;]+?)(?:\s+\2)+(;|})": r"\1:\2\3",
         # Condense zero units. Replace `0(px, em, %, etc)` with `0`.
         r"([\s:])(0)(px|em|%|in|cm|mm|pc|pt|ex)": r"\1\2",
         # Condense multiple adjacent whitespace characters into one.
@@ -59,8 +59,6 @@ def compress_css(css):
         r";;+": ";",
         # Condense floating points. Replace `0.5` with `.5` where possible.
         r"(:|\s)0+\.(\d+)": r"\1.\2",
-        # Condense margin and padding.
-        r"(margin|padding): ?([^;]+?)(?:\s+\2)+;": r"\1:\2;",
         # Condense multidimensional zeros.
         r"(:0 0 0 0|:0 0)+;": ":0;",
         # Remove both double or single quotes in url().
