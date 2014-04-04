@@ -38,6 +38,8 @@ def compress_css(css):
         # If there is a `@charset`, then only allow one, and move to the beginning.
         r"^(.*)(@charset \"[^\"]*\";)": r"\1\2",
         r"^(\s*@charset [^;]+;\s*)+": r"\1",
+        # Lowercase everything between the curly braces.
+        r"(\{(.*?)\})": lambda lower: "%s" % lower.group(1).lower(),
         # Remove spaces from before things.
         r"\s+([!{};:>+\(\)\],])": r"\1",
         # Remove spaces from after things.
@@ -69,8 +71,6 @@ def compress_css(css):
         r"[^\}\{]+\{\}": "",
         # Remove all CSS comment blocks.
         r"/\*[\s\S]*?\*/": "",
-        # Lowercase all hexadecimals.
-        r"#([A-Fa-f0-9]{3,6})": lambda hex: "#%s" % hex.group(1).lower(),
         # Remove unnecessary semicolons.
         r";\}": "}",
     }
