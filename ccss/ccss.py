@@ -72,20 +72,19 @@ def compress_css(css):
 
 
 def css_line_breaker(css, new_length=700):
-    """Breaks up long lines of CSS code into shorter ones.
-       Messy code that needs a better docstring!
+    """Breaks up long lines of CSS code to shorter ones.
 
-       :param css: CSS code to break
+    Traverses through `css` and inserts a newline after the first `}` when
+    `new_length` of characters is bypassed.
+
+    :param css: CSS code to break up into shorter lines.
+    :param new_length: number of chars to bypass before inserting a line break.
     """
-    new_string = ''
-    char_counter = 0
-
-    for char in css:
-        if char_counter > new_length and char == '}':
-            new_string = new_string + "}\n"
-            char_counter = 0
+    new_css = ''
+    for i, char in enumerate(css):
+        if i > new_length and char == '}':
+            new_css = new_css + "}\n"
         else:
-            new_string = new_string + char
-        char_counter = char_counter + 1
+            new_css = new_css + char
 
-    return new_string
+    return new_css.rstrip()
