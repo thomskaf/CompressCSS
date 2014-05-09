@@ -20,20 +20,6 @@ def compress_css(css):
 
     :param css: the Cascading Style Sheets code to compress.
     """
-    def rgb_to_hex(rgb):
-        "Converts RGB to HEX. `255, 255, 255` -> `#ffffff`"
-        rgb = eval(rgb)
-        return '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
-
-    regex = re.compile(r"rgb\s*\(\s*([0-9,\s]+)\s*\)")
-    match = regex.search(css)
-
-    while match:
-        colors = match.group(1).split(",")
-        hexcolor = rgb_to_hex(match.group(1))
-        css = css.replace(match.group(), hexcolor)
-        match = regex.search(css)
-
     regexps = {
         # If there is a `@charset`, then only allow one, and move to the beginning.
         r"^(.*)(@charset \"[^\"]*\";)": r"\1\2",
@@ -65,6 +51,9 @@ def compress_css(css):
         r"url\((['\"])([^)]*)\1\)": r"url(\2)",
         # Shorten 6-digit hex color codes to 3-digits whenever possible.
         r"#((?i)[0-9a-fA-F])\1((?i)[0-9a-fA-F])\2((?i)[0-9a-fA-F])\3": r"#\1\2\3",
+        # Convert RGB to HEX. `255, 255, 255` -> `#ffffff`.
+        r"rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)": lambda s:
+        "#%02x%02x%02x" % (eval(s.group(1)), eval(s.group(2)), eval(s.group(3))),
         # Remove empty rules.
         r"[^\}\{]+\{\}": "",
         # Remove all CSS comment blocks.
