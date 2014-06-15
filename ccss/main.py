@@ -5,8 +5,8 @@ import cgi
 import jinja2
 import random
 import webapp2
-import datetime
 from google.appengine.ext import ndb
+from datetime import datetime, timedelta
 from ccss import compress_css, css_line_breaker
 
 
@@ -55,12 +55,8 @@ class Tmpfiles(webapp2.RequestHandler):
         items = query.fetch()
 
         for item in items:
-            date_time = re.sub("([^ ]+) |\.(.*)|:", "", str(item.datetime))
-            now = datetime.datetime.now().strftime("%H%M%S")
-
-            if now > int(date_time)+3600:
-                self.response.write('Delete: %s<br>' % item)
-                #item.key.delete()
+            if datetime.now() - timedelta(minutes=30) > item.datetime:
+                item.key.delete()
 
 
 app = webapp2.WSGIApplication([
