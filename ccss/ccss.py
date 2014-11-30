@@ -63,7 +63,7 @@ def compress_css(css):
         css = re.sub(pattern, replace, css)
 
     # Revert `background-position:0;` to the valid `background-position:0 0;`.
-    css = css.replace("background-position:0;", "background-position:0 0;",)
+    css = css.replace("background-position:0;", "background-position:0 0;")
     # Put the space back in for a few cases, such as:
     # `@media screen and (-webkit-min-device-pixel-ratio:0)`.
     css = css.replace(" and(", " and (")
