@@ -30,9 +30,6 @@ def compress_css(css):
         r"\s+([!{};:>+\(\)\],])": r"\1",
         # Remove spaces from after things.
         r"([!{}:;>+\(\[,])\s+": r"\1",
-        # Put the space back in for a few cases, such as `@media screen`
-        # and `(-webkit-min-device-pixel-ratio:0)`.
-        r"\band\(": "and (",
         # Condense padding and margin.
         r"(padding|margin)\s*?:\s*?([^;]+?)(?:\s+\2)+(;|})": r"\1:\2\3",
         # Condense zero units. Replace `0(px, em, %, etc)` with `0`.
@@ -67,6 +64,9 @@ def compress_css(css):
 
     # Revert `background-position:0;` to the valid `background-position:0 0;`.
     css = css.replace("background-position:0;", "background-position:0 0;",)
+    # Put the space back in for a few cases, such as:
+    # `@media screen and (-webkit-min-device-pixel-ratio:0)`.
+    css = css.replace(" and(", " and (")
 
     return css
 
