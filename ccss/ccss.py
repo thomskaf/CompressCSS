@@ -4,7 +4,7 @@
 
     Function to compress CSS
 
-    :copyright: (c) 2012 by Thomas Skaflem <thomas@skaflem.net>.
+    :copyright: (c) 2012 by Thomas Skaflem.
     :license: BSD, see LICENSE for more details.
 """
 import re
