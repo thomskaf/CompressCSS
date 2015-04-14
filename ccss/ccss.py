@@ -21,9 +21,6 @@ def compress_css(css):
     :param css: the Cascading Style Sheets code to compress.
     """
     regexps = {
-        # If there is a `@charset`, then only allow one, and move to the beginning.
-        r"^(.*)(@charset \"[^\"]*\";)": r"\1\2",
-        r"^(\s*@charset [^;]+;\s*)+": r"\1",
         # Lowercase everything between the curly braces.
         r"(\{(.*?)\})": lambda lower: "%s" % lower.group(1).lower(),
         # Remove spaces from before things.
@@ -57,6 +54,8 @@ def compress_css(css):
         r"/\*[\s\S]*?\*/": "",
         # Remove unnecessary semicolons.
         r";\}": "}",
+        # If there is a `@charset`, then only allow one, and move to the beginning.
+        r"^(\s*@charset [^;]+;\s*)+": r"\1",
     }
 
     for pattern, replace in regexps.items():
