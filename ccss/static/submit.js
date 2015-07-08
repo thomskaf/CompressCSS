@@ -7,7 +7,7 @@ $(document).ready(function(){
           $('pre').text(css);
           $('pre').css('display', 'block');
           $('a#css-link').css('display', 'block');
-		      $("a[href='compressed.css']").attr('href', '/get/' + css_file) // !!
+          $("a[href='compressed.css']").attr('href', '/get/' + css_file) // !!
       });
       return false; // Prevent default action
   });
