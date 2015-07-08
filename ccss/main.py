@@ -7,7 +7,7 @@ import random
 import webapp2
 from google.appengine.ext import ndb
 from datetime import datetime, timedelta
-from ccss import compress_css, css_line_breaker
+from ccss import compress_css
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -46,7 +46,7 @@ class CompressCSS(webapp2.RequestHandler):
         css = CSSFile.query(CSSFile.file_name == file_name)
 
         self.response.headers['Content-Disposition'] = 'attachment; filename=compressed.css'
-        self.response.write(css_line_breaker(css.get().css_code))
+        self.response.write('\n'.join(line.strip() for line in re.findall(r'.{1,700}(?:\s+|$)', css.get().css_code)))
 
 
 class Tmpfiles(webapp2.RequestHandler):

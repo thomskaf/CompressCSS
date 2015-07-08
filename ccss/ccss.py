@@ -70,22 +70,3 @@ def compress_css(css):
     css = css.replace(" and(", " and (")
 
     return css
-
-
-def css_line_breaker(css, new_length=700):
-    """Breaks up long lines of CSS code to shorter ones.
-
-    Traverses through `css` and inserts a newline after the first `}` when
-    `new_length` of characters is bypassed.
-
-    :param css: CSS code to break up into shorter lines.
-    :param new_length: number of chars to bypass before inserting a line break.
-    """
-    new_css = ''
-    for i, char in enumerate(css):
-        if i > new_length and char == '}':
-            new_css = new_css + "}\n"
-        else:
-            new_css = new_css + char
-
-    return new_css.rstrip()
