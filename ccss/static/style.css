@@ -131,3 +131,29 @@ h6 {
     position: fixed;top: 45%; width: 100%;
 }
 h5 span {font-size: 14px;display:block;margin-top: 15px;}
+@media all and (max-width: 600px) {
+    h1 a {
+        font-size:1.3em;
+        padding-top:0px;
+        margin-top:-25px;
+        background-position: left 25px;
+        height:85px;
+        width: 155px;
+    }
+    form, form textarea {margin-top:0}
+    form {margin-top:0;width: auto;min-width:300px;border-top:1px solid #D6D6D6;}
+    form textarea {
+        margin:0;
+        width: 98.5%;
+        min-width:300px;
+        display:block;
+        padding:2px;
+    }
+    form input {margin:5px}
+    p#footer {
+        margin-top:5px;
+        padding:5px;
+        border:none;
+        width: auto;
+    }
+}
